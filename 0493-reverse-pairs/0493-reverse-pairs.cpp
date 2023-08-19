@@ -6,38 +6,37 @@ class Solution {
         while(left<=mid && right<=high){
             if(arr[left]<=arr[right]){
                 temp.push_back(arr[left]);
-                left++;
+                ++left;
             }
             else{
                 temp.push_back(arr[right]);
-                right++;
+                ++right;
             }
         }
 
         while(left<=mid){
             temp.push_back(arr[left]);
-            left++;
+            ++left;
         }
         while(right<=high){
             temp.push_back(arr[right]);
-            right++;
+            ++right;
         }
         left=low;
-        for(int i=0; i<temp.size(); i++){
+        for(int i=0; i<temp.size(); ++i){
             arr[low]=temp[i];
-            low++;
+            ++low;
         }
     }
 
     int countReverse(vector<int>& arr, int low, int mid, int high){
         int count =0;
-        int i=low, j=mid+1;
-        while(i<=mid){
+        int j=mid+1;
+        for(int i = low; i<= mid; i++){
             while(j<=high && arr[i]>2* (long long) arr[j]){
-                j++;
+                ++j;
             }
             count+=(j-(mid+1));
-            i++;
         }
         return count;
     }
