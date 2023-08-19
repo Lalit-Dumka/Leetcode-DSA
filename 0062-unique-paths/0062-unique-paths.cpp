@@ -4,9 +4,9 @@ public:
         int N = m+n-2;
         int r = n-1;
 
-        long long sol = 1;
+        double sol = 1;
         for(int i = 1; i<=r; i++){
-            sol= sol* (N-r+i)/i;
+            sol = (sol* (N-r+i))/i;
         }
 
         return sol;
