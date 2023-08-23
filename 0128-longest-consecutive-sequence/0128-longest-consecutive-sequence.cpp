@@ -9,11 +9,9 @@ public:
         int c=1, max=1;
         map<int,int>::iterator it = mp.begin();
         int prev=it->first;
-        cout<<prev<<" ";
         it++;
         while(it!=mp.end()){
             int cur = it->first;
-            cout<<it->first<<" ";
             if(cur==prev){
                 c=c;
             }
