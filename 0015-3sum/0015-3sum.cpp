@@ -4,23 +4,26 @@ public:
         vector<vector<int>> sol;
         int n= nums.size();
         sort(nums.begin(), nums.end());
-        for(int k=0; k<n; k++){
-            int start = k+1, end = n-1;
-            if(k>0&&nums[k]==nums[k-1])continue;
-            while(start<end){
-                int sum = nums[start]+nums[end]+nums[k];
-                if(sum==0){
-                   sol.push_back(vector<int>({nums[k],nums[start],nums[end]}));
-                    start++;
-                    end--;
-                    while(start < end and (nums[start-1] == nums[start])) start++;
-                    while(start < end and (nums[end+1] == nums[end])) end--;
-                } else if(sum<0){
-                    start++;
-                } else{
-                    end--;
+        for(int i=0; i<n; i++){
+            int left = i+1, right = n-1;
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            while(left<right){
+                if(nums[i]+nums[left]+nums[right]==0){
+                    vector<int> temp = {nums[i],nums[left],nums[right]};
+                    sol.push_back(temp);
+                    left++;
+                    right--;
+                    while(left<n && nums[left]==nums[left-1]) left++;
+                    while(right>=0 && nums[right]==nums[right+1]) right--;
+                }
+                else if(nums[i]+nums[left]+nums[right]<0){
+                    left++;
+                }
+                else{
+                    right--;
                 }
             }
+            
         }
         return sol;
     }
