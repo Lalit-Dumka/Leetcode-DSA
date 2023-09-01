@@ -1,17 +1,11 @@
 class Solution {
 public:
     vector<int> countBits(int n) {
-        vector<int> sol(n+1, 0);
-        for(int i=0; i<n+1; i++){
-            int count =0;
-            int num=i;
-            while(num!=0){
-                int rem=num%2;
-                if(rem) count++;
-                num=num/2;
-            }
-            sol[i]=count;
-        }
+        vector<int> sol(n+1);
+        sol[0]=0;
+        for(int i = 1; i<=n; ++i)
+            sol[i] = sol[i/2] + i%2;
+        
         return sol;
     }
 };
