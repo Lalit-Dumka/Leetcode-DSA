@@ -1,24 +1,24 @@
+#include <vector>
+#include <algorithm>
+
 class Solution {
 public:
-    int solve(vector<int>& cost, vector<int>& time, int i, int bank,vector<vector<int>> &dp){
-        if(bank <= 0){
-            return 0;
-        }
-        if(i >= cost.size()){
-            return 1e9;   
-        }
-        if(dp[i][bank] != -1){
-            return dp[i][bank];
-        }
-        else {
-            int notTake = solve(cost, time, i+1, bank,dp);
-            int take = cost[i] + solve(cost, time, i+1, bank -  time[i] -1,dp); 
-            return dp[i][bank] = min(notTake, take);      
-        }
-    }
+    int paintWalls(std::vector<int>& cost, std::vector<int>& time) {
+        int n = cost.size(); // Get the number of walls
+        std::vector<int> dp(n + 1, 1e9); // Create a dynamic programming array to store the minimum cost
+        dp[0] = 0; // The minimum cost to paint 0 walls is 0 (base case)
 
-    int paintWalls(vector<int>& cost, vector<int>& time) {
-        vector<vector<int>> dp(501,vector<int>(501,-1));
-        return solve(cost, time, 0, time.size(),dp);
+        // Loop through each wall
+        for (int i = 0; i < n; ++i) {
+            // Loop through the dynamic programming array in reverse order
+            for (int j = n; j > 0; --j) {
+                // Calculate the minimum cost to paint 'j' walls using the current wall 'i'
+                // The minimum cost at 'j' is the minimum of:
+                //   - The cost of painting the current wall 'i' + the cost of painting the previous walls (dp[j - time[i] - 1])
+                //   - The cost of painting the previous walls without using the current wall 'i' (dp[j])
+                dp[j] = std::min(dp[j], dp[std::max(j - time[i] - 1, 0)] + cost[i]);
+            }
+        }
+        return dp[n]; // The minimum cost to paint all 'n' walls is stored in dp[n]
     }
 };
