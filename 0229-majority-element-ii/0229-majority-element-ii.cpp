@@ -1,28 +1,43 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        // Create a frequency map to store the count of each element
-        unordered_map<int, int> elementCountMap;
-        
-        // Iterate through the input array to count element occurrences
-        for(int i = 0; i < nums.size(); i++) {
-            elementCountMap[nums[i]]++;
+        //Moore voting Algorithm
+        int n = nums.size();
+        int c1=0, c2=0, el1 = INT_MIN, el2 = INT_MIN;
+        for(int i=0; i<n; i++){
+            if(c1==0 && nums[i]!=el2){
+                c1=1;
+                el1=nums[i];
+            }
+            else if(c2==0 && nums[i]!=el1){
+                c2=1;
+                el2 = nums[i];
+            }
+            else if(el1==nums[i]){
+                c1++;
+            }
+            else if(el2==nums[i]){
+                c2++;
+            }
+            else{
+                c1--;
+                c2--;
+            }            
         }
-        
-        vector<int> majorityElements;
-        int threshold = nums.size() / 3;
-        
-        // Iterate through the frequency map to identify majority elements
-        for(auto elementCountPair : elementCountMap) {
-            int element = elementCountPair.first;
-            int count = elementCountPair.second;
-            
-            // Check if the element count is greater than the threshold
-            if(count > threshold) {
-                majorityElements.push_back(element);
+        c1=0,c2=0;
+        for(int i = 0; i<n; i++){
+            if(el1==nums[i]){
+                c1++;
+            }
+            else if(el2==nums[i]){
+                c2++;
             }
         }
-        
-        return majorityElements; 
+        vector<int> sol;
+        int threshold = n/3;
+        if(c1>threshold) sol.push_back(el1);
+        if(c2>threshold) sol.push_back(el2);
+        return sol;
     }
+    
 };
